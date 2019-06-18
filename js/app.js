@@ -1,4 +1,4 @@
-let selectT = $('#color').find('option[value="Please select a T-shirt theme"]').val()
+let selectT = $('#color').find('option[value="Please select a T-shirt theme"]').val();
 
 
 //Focuses cursor on first text box
@@ -21,7 +21,7 @@ $('#title').on('change', function(){
 //------------------T shirt section -------------------------------
 
 //Hides colors on first page load
-$('#color option:gt(0)').hide()
+$('#color option:gt(0)').hide();
 
 //hides the 'Select Theme' option when the dropdown is clicked
 $('#design').on('click', function(){
@@ -34,20 +34,39 @@ $('.shirt').change(function(){
  if ($('#design').val() == 'js puns'){
     //hides all colors less than/greater than index value
     //according to order of colors - must change if colors are added
-    $('#color option:lt(4)').show()
-    $('#color option:gt(3)').hide()
+    $('#color option:lt(4)').show();
+    $('#color option:gt(3)').hide();
     //resets the option selected to first color
     $('#color').val('cornflowerblue');
-    console.log('testjsPuns')
 }
   else if ($('#design').val() == 'heart js'){
     //hides all colors less than/greater than index value
     //according to order of colors - must change if colors are added
-    $('#color option:gt(3)').show()
-    $('#color option:lt(4)').hide()
+    $('#color option:gt(3)').show();
+    $('#color option:lt(4)').hide();
     //resets the option selected to first color
     $('#color').val('tomato');
 }
 });
 
 //------------------Activity section -------------------------------
+//establishes counter for to keep track of event costs
+let totalCost = 0;
+//creates new <p> element and adds text plus the varable for totalCost
+const newElement = $("<p></p>").text("Total Cost: " + totalCost);
+//appends new element to the bottom of the list of event checkboxes
+$('.activities').append(newElement);
+
+$('.activities').change(function(){
+  let lastBoxChecked = event.target;
+  let labelText = $(lastBoxChecked).parent().text();
+  const dollarIndex = labelText.indexOf('$');
+  const eventCost = $('labelText').slice(dollarIndex).text();
+
+  // eventCost = $('eventCost').text()
+  console.log(lastBoxChecked)
+  console.log(labelText)
+  console.log(dollarIndex)
+  console.log(eventCost)
+
+})
