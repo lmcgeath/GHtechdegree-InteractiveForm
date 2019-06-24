@@ -1,6 +1,6 @@
 let selectT = $('#color').find('option[value="Please select a T-shirt theme"]').val();
 
-
+//NEED TO PREVENT FIREFOX FROM SAVING CHECKED BOXES
 //Focuses cursor on first text box
 $('#name').focus();
 
@@ -53,20 +53,53 @@ $('.shirt').change(function(){
 //establishes counter for to keep track of event costs
 let totalCost = 0;
 //creates new <p> element and adds text plus the varable for totalCost
-const newElement = $("<p></p>").text("Total Cost: " + totalCost);
+let newElement = $('<p></p>');
 //appends new element to the bottom of the list of event checkboxes
 $('.activities').append(newElement);
 
 $('.activities').change(function(){
-  let lastBoxChecked = event.target;
-  let labelText = $(lastBoxChecked).parent().text();
-  const dollarIndex = labelText.indexOf('$');
-  const eventCost = $('labelText').slice(dollarIndex).text();
+  const lastBoxChecked = event.target;
+  const labelText = $(lastBoxChecked).parent().text();
+  const dollarIndex = labelText.indexOf('$') + 1;
+  const eventCostSlice = labelText.slice(dollarIndex);
+  const eventCostInt = parseInt(eventCostSlice);
+/*checks whether the last box checked has a current state of
+checked or unchecked and add/subtracts the cost of the event
+accordingly*/
+  if($(lastBoxChecked).prop('checked') == true){
+    totalCost += eventCostInt
+}
+  else if ($(lastBoxChecked).prop('checked') == false){
+    totalCost -= eventCostInt
+}
+ //sets the text of the event cost counter to display as it changes
+ newElement.text('Total: $' + totalCost);
 
-  // eventCost = $('eventCost').text()
-  console.log(lastBoxChecked)
-  console.log(labelText)
-  console.log(dollarIndex)
-  console.log(eventCost)
+ const dashIndex = labelText.indexOf('—');
+ const commaIndex = labelText.indexOf(',');
+ const timeOfEvent = labelText.slice(dashIndex, commaIndex);
+ // console.log(dashIndex)
+ // console.log(commaIndex)
+ // console.log(timeOfEvent)
 
-})
+ //creates a variable of the list of checkboxes to loop over -- MAY NEED TO EDIT
+ const checkboxes = $('.activities input');
+ // console.log(labelText)
+
+ for (i = 0; i<checkboxes.length; i++) {
+   // let lastBoxText = lastBoxChecked.text()
+   let checkboxText = $(checkboxes[i]).parent().text();
+   // let lastTimeOfEvent = timeOfEvent[i]
+   // console.log(lastTimeOfEvent)
+   // if($(checkboxes).prop('checked') == true && lastTimeOfEvent == timeOfEvent)
+
+   if(checkboxText.includes(timeOfEvent) && checkboxText !== labelText) {
+     if ( $(lastBoxChecked).prop('checked') === false ) {
+				checkboxes[i].disabled = false;
+			} else {
+				checkboxes[i].disabled = true;
+			}
+   }
+
+ }
+});
