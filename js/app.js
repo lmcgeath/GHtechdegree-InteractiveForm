@@ -161,7 +161,7 @@ function validateActivities(){
 }
 //Function for validating credit card input
 function validateCreditCard(){
-  let creditCardTest = /^\d{16}$/
+  let creditCardTest = /^\d{13,16}$/
   creditCard = $('#cc-num').val();
   if (creditCardTest.test(creditCard) == false){
     $('#cc-num').css("border","2px solid red");
